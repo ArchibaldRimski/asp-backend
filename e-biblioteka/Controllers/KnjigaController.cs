@@ -5,6 +5,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using e_biblioteka.Models;
 using Microsoft.AspNetCore.Cors;
+using System;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace e_biblioteka.Controllers
@@ -21,7 +22,44 @@ namespace e_biblioteka.Controllers
             _configuration = configuration;
             _env = env;
         }
+        [EnableCors]
+        [HttpPost]
 
+
+        public JsonResult Post(Knjiga knjiga)
+        {
+
+            if (knjiga is null)
+            {
+                throw new ArgumentNullException(nameof(knjiga));
+            }
+
+            string query = String.Format("INSERT INTO `e-biblioteka`.`knjiga` (`naslov`, `ocena`, `brOcena`, `idpisac`) VALUES ('{0}', '0', '0', '{1}');", knjiga.Naslov, knjiga.Pisac.IdPisac);
+            DataTable dt = new DataTable();
+            MySqlDataReader reader;
+            string sqldatasource = _configuration.GetConnectionString("e-bibliotekaCon");
+            using (MySqlConnection sqlConnection = new MySqlConnection(sqldatasource))
+            {
+                sqlConnection.Open();
+                try
+                {
+                    using (MySqlCommand sqlCommand = new MySqlCommand(query, sqlConnection))
+                    {
+                        reader = sqlCommand.ExecuteReader();
+                        dt.Load(reader);
+                        sqlConnection.Close();
+                    }
+                }
+                catch (Exception)
+                {
+
+                    return new JsonResult("fail!");
+                }
+            }
+
+
+            return new JsonResult("success");
+        }
         // GET: api/<KnjigaController>
         [EnableCors]
         [HttpGet]

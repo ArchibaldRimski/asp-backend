@@ -89,12 +89,12 @@ namespace e_biblioteka.Controllers
                 {
                     Response.Headers.Add("Access-Control-Allow-Origin", "*");
                     Request.Headers.Add("Access-Control-Allow-Origin", "*");
-                    return new JsonResult(ex.Message);
+                    return new JsonResult("Knjiga je već pozajmljena");
                 }
             }
 
             
-            return new JsonResult("succ");
+            return new JsonResult("Uspešno pozajmljena knjiga");
         }
     }
 }

@@ -86,20 +86,17 @@ namespace e_biblioteka.Controllers
                 }
                 catch (Exception)
                 {
-                    Response.Headers.Add("Access-Control-Allow-Origin", "*");
-                    Request.Headers.Add("Access-Control-Allow-Origin", "*");
+                    
                     return new JsonResult("invalid credentials");
                 }
             }
             
             if (dt.Rows.Count == 0)
             {
-                Response.Headers.Add("Access-Control-Allow-Origin", "*");
-                Request.Headers.Add("Access-Control-Allow-Origin", "*");
+                
                 return new JsonResult("invalid credentials");
             }
-            Response.Headers.Add("Access-Control-Allow-Origin", "*");
-            Request.Headers.Add("Access-Control-Allow-Origin", "*");
+            
             return new JsonResult(dt);
         }
     }

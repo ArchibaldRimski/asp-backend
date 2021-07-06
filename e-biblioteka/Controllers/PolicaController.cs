@@ -58,7 +58,7 @@ namespace e_biblioteka.Controllers
             }
 
 
-            return new JsonResult("success");
+            return new JsonResult("Uspešno vraćena knjiga");
         }
         
         // GET api/<KnjigaController>/5
